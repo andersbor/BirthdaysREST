@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BirthDayListRepositoryLib;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BirthdaysREST.Controllers
 {
@@ -7,7 +8,12 @@ namespace BirthdaysREST.Controllers
     [ApiController]
     public class PersonsController : ControllerBase
     {
-        private readonly PersonsRepository _repo = new();
+        private readonly PersonsRepository _repo;
+
+        public PersonsController(PersonsRepository repo)
+        {
+            _repo = repo;
+        }
 
         // GET: api/<PersonsController>
         [HttpGet]
@@ -18,6 +24,8 @@ namespace BirthdaysREST.Controllers
 
         // GET api/<PersonsController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Person> Get(int id)
         {
             Person? p = _repo.Get(id);
@@ -30,6 +38,8 @@ namespace BirthdaysREST.Controllers
 
         // POST api/<PersonsController>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Person> Post([FromBody] Person p)
         {
             try
@@ -45,14 +55,30 @@ namespace BirthdaysREST.Controllers
 
         // PUT api/<PersonsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Person> Put(int id, [FromBody] Person data)
         {
+            Person? existingPerson = _repo.Update(id, data);
+            if (existingPerson == null)
+            {
+                return NotFound("No such person, id: " + id);
+            }
+            return Ok(existingPerson);
         }
 
         // DELETE api/<PersonsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Person> Delete(int id)
         {
+            Person? existingPerson = _repo.Remove(id);
+            if (existingPerson == null)
+            {
+                return NotFound("No such person, id: " + id);
+            }
+            return Ok(existingPerson);
         }
     }
 }

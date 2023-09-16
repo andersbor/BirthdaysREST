@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<PersonsRepository, PersonsRepository>();
+builder.Services.AddSingleton<PersonsRepository>(new PersonsRepository());
 
 var app = builder.Build();
 
