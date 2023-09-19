@@ -17,9 +17,9 @@ namespace BirthdaysREST.Controllers
 
         // GET: api/<PersonsController>
         [HttpGet]
-        public IEnumerable<Person> Get(string? user_id = null, string? sort_by = null, string? name = null)
+        public IEnumerable<Person> Get(string? user_id = null, string? sort_by = null, string? name_fragment = null, int? age_below=null, int? age_above=null)
         {
-            return _repo.Get(user_id, sort_by, name);
+            return _repo.Get(user_id, sort_by, name_fragment, age_below, age_above);
         }
 
         // GET api/<PersonsController>/5
