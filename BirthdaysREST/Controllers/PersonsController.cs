@@ -5,7 +5,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BirthdaysREST.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]    
+    [ApiController]
     public class PersonsController : ControllerBase
     {
         private readonly PersonsRepository _repo;
