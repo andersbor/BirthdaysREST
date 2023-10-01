@@ -33,7 +33,6 @@ namespace BirthdaysREST.Controllers
             {
                 return NotFound();
             }
-
             return Ok(p);
         }
 
