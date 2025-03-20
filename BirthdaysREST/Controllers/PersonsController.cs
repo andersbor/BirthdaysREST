@@ -37,6 +37,12 @@ namespace BirthdaysREST.Controllers
         }
 
         // POST api/<PersonsController>
+        /// <summary>
+        /// Add a new person to the list
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        /// p.userId cannot be null
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
